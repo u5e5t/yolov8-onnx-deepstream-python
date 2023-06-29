@@ -1,16 +1,9 @@
 # Yolov8-onnx-deepstream-python
 
-NVIDIA DeepStream SDK 6.0.1 configuration for YOLOv8 car detection models
+简单的yolov8模型4分类车辆检测器，代码很简陋
 
 ##
 
-
-
-### Getting started
-
-* [Requirements](#requirements)
-* [Basic usage](#basic-usage)
-* [NMS configuration](#nms-configuration)
 
 ##
 
@@ -31,28 +24,31 @@ NVIDIA DeepStream SDK 6.0.1 configuration for YOLOv8 car detection models
 
 ##
 
-### Basic usage
+### 基础
 
-#### 1. Download the repo
+#### 1. 下载工程，进入路径
 
 ```
 cd yolov8_onnx_deepstream_python
 ```
 
-#### 2. put onnx files to `weights`folder
+#### 2. yolov8导出的onnx模型移至`weights`，修改`onnx2tensorrt.py`对应路径
+```
+# onnx2tensorrt.py
+onnx_path = './weights/best.onnx'
+engine_path = './weights/best.engine'
 
-#### 3. Compile the lib
+python onnx2tensorrt.py # 简单转换不涉及动态形状、int8量化
+```
 
-* DeepStream 6.0.1 / 6.0 on x86 platform
+#### 3. 编译yolov8解析函数
+```
+cd model
+make
+```
 
-  ```
-  cd model
-  make
-  ```
-
-#### 4. Edit the `config_infer_primary.txt` file according to your model (example for YOLOv8)
-
-#### 5. Run
+#### 4. 根据模型修改`config_infer_primary.txt` 
+#### 5. 运行
 
 ```
 python main.py
@@ -76,7 +72,7 @@ topk=300
 
 **NOTE**: Make sure to set `cluster-mode=2` in the config_infer file.
 
-## *References
+## References
 + [wang-xinyu/tensorrtx](https://github.com/wang-xinyu/tensorrtx)
 + [NVIDIA-AI-IOT/deepstream_python_apps](https://github.com/NVIDIA-AI-IOT/deepstream_python_apps)
 + [Deepstream-Yolo](https://github.com/marcoslucianops/DeepStream-Yolo)
